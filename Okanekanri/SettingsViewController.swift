@@ -65,7 +65,7 @@ class SettingsViewController: UIViewController {
         
         UserDefaults.standard.set(barArray, forKey: "1")
         
-
+        
         
         }
    

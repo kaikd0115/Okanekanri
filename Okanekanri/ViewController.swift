@@ -15,6 +15,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var barArray : [String] = []
     var memoryArray : [String] = []
+    var memoryArrayReversed : [String] = []
+    var savedArray : [String] = []
+    
     
     
     
@@ -36,20 +39,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
         barArray = []
         
+        readFromUserDefaults()
+        sort()
+        
             }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section : Int) -> Int {
-        return barArray.count
+        return self.memoryArrayReversed.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath : IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell( withIdentifier: "Cell")
+        cell?.textLabel?.text = self.memoryArrayReversed[indexPath.row]
         //cell?.textLabel?.text = "テスト"
         return cell!
     }
     func readFromUserDefaults(){
-        guard let savedArray = UserDefaults.standard.array(forKey: "1") as? [String] else {
+        guard UserDefaults.standard.array(forKey: "1") is [String] else {
             return
         }
-      savedArray = memoryArray
+        self.savedArray = memoryArray
     }
     func sort(){
         memoryArrayReversed = memoryArray.reversed()
