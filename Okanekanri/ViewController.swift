@@ -46,10 +46,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell!
     }
     func readFromUserDefaults(){
-        guard let memoryArray = UserDefaults.standard.array(forKey: "1") as? [String] else {
+        guard let savedArray = UserDefaults.standard.array(forKey: "1") as? [String] else {
             return
         }
-      barArray = memoryArray
+      savedArray = memoryArray
+    }
+    func sort(){
+        memoryArrayReversed = memoryArray.reversed()
     }
     
     }

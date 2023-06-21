@@ -59,17 +59,13 @@ class SettingsViewController: UIViewController {
         dateTextField.inputView = datePicker
         dateTextField.inputAccessoryView = toolbar
         
-        var dateTextFieldValue : [String] = []
-        dateTextField = dateTextField.text
+        var dateTextFieldValue: String = ""
+        dateTextFieldValue = dateTextField.text!
     barArray.append("\(dateTextFieldValue)")
         
         UserDefaults.standard.set(barArray, forKey: "1")
         
-    
-        
-        
-        
-        
+
         
         }
    
