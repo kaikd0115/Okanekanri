@@ -19,13 +19,21 @@ class SettingsViewController: UIViewController {
     
     var saveData: UserDefaults = UserDefaults.standard
     
-    var date : [String] = []
-    var amount : [String] = []
-    var purpose : [String] = []
+    var date: Int = 0
+    var amount: String = ""
+    var purpose: String = ""
+     
+    let date = dateTextField.text!
+    let amount = amountTextField.text!
+    let purpose = purposeTextField.text!
     
     var barArray : [String] = []
     var memoryArray: [String] = []
     var memoryArrayReversed : [String] = []
+    
+    var dates : [String] = []
+    var amounts : [String] = []
+    var purposes : [String] = []
 
     
     
@@ -40,9 +48,9 @@ class SettingsViewController: UIViewController {
     
         saveData.register(defaults: ["date":[], "amount":[], "purpose":[]])
         
-        date = saveData.object(forKey: "date") as! [String]
-        amount = saveData.object(forKey: "amount") as! [String]
-        purpose = saveData.object(forKey: "purpose") as! [String]
+        date = saveData.set(dates, forKey: "date")as? String
+        amount = saveData.set(amounts, forKey: "amount")
+        purpose = saveData.set(purposes, forkey: "purpose")
         //print(date)
         
         datePicker.datePickerMode = .date
