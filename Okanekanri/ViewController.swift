@@ -13,10 +13,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet var datelabel: UILabel!
     var time = ""
     
-    var barArray : [String] = []
-    var memoryArray : [String] = []
-    var memoryArrayReversed : [String] = []
+    var dates : [String] = []
+    var amounts : [String] = []
+    var purpsoses : [String] = []
     var savedArray : [String] = []
+    
+    var saveData : UserDefaults = UserDefaults.standard
     
     
     
@@ -36,19 +38,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         datelabel.text = time
         
         table.delegate = self
+        
+        saveData.register(defaults: ["dates":[]])
+        dates = saveData.object(forKey: "date") as! [String]
             
-        barArray = []
+        //dates = []
         
         readFromUserDefaults()
         sort()
+        print(dates)
         
             }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section : Int) -> Int {
-        return self.memoryArrayReversed.count
+        return self.dates.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath : IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell( withIdentifier: "Cell")
-        cell?.textLabel?.text = self.memoryArrayReversed[indexPath.row]
+        cell?.textLabel?.text = self.dates[indexPath.row]
         //cell?.textLabel?.text = "テスト"
         return cell!
     }
@@ -56,10 +63,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         guard UserDefaults.standard.array(forKey: "1") is [String] else {
             return
         }
-        self.savedArray = memoryArray
+        self.savedArray = dates
     }
     func sort(){
-        memoryArrayReversed = memoryArray.reversed()
+        dates = dates.reversed()
     }
     
     }
