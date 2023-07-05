@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var dateTextField: UITextField!
     @IBOutlet var amountTextField: UITextField!
@@ -18,14 +18,7 @@ class SettingsViewController: UIViewController {
     var datePicker: UIDatePicker = UIDatePicker()
     
     var saveData: UserDefaults = UserDefaults.standard
-    
-    var date: Int = 0
-    var amount: String = ""
-    var purpose: String = ""
-     
-    let date = dateTextField.text!
-    let amount = amountTextField.text!
-    let purpose = purposeTextField.text!
+
     
     var barArray : [String] = []
     var memoryArray: [String] = []
@@ -36,22 +29,14 @@ class SettingsViewController: UIViewController {
     var purposes : [String] = []
 
     
-    
-   
-    
-    
-    
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
     
         saveData.register(defaults: ["date":[], "amount":[], "purpose":[]])
         
-        date = saveData.set(dates, forKey: "date")as? String
-        amount = saveData.set(amounts, forKey: "amount")
-        purpose = saveData.set(purposes, forkey: "purpose")
-        //print(date)
+                //print(date)
         
         datePicker.datePickerMode = .date
         datePicker.timeZone = NSTimeZone.local
@@ -73,7 +58,7 @@ class SettingsViewController: UIViewController {
         
         UserDefaults.standard.set(barArray, forKey: "1")
         
-        
+        dateTextField.delegate = self
         
         }
    
@@ -86,9 +71,17 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func saveMemo(_ sender: Any){
-        saveData.set(dateTextField.text, forKey: "date")
-        saveData.set(amountTextField.text, forKey: "amount")
-        saveData.set(purposeTextField.text, forKey: "purpose")
+        let date = dateTextField.text!
+        let amount = amountTextField.text!
+        let purpose = purposeTextField.text!
+        
+//        saveData.set(dateTextField.text, forKey: "date")
+//        saveData.set(amountTextField.text, forKey: "amount")
+//        saveData.set(purposeTextField.text, forKey: "purpose")
+        
+        saveData.set(dates, forKey: "date")
+        saveData.set(amounts, forKey: "amount")
+        saveData.set(purposes, forKey: "purpose")
 //        print(date)
 //        print(amount)
 //        print(purpose)
@@ -108,8 +101,7 @@ class SettingsViewController: UIViewController {
     @IBAction func dismiss(_ sender: Any){
         dismiss(animated: true, completion: nil)
     }
-    
-
+   
     /*
     // MARK: - Navigation
 
@@ -118,6 +110,7 @@ class SettingsViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
+     
      */
 
 }
