@@ -15,19 +15,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var dates : [String] = []
     var amounts : [String] = []
-    var purpsoses : [String] = []
-    var savedArray : [String] = []
+    var purposes : [String] = []
+    
+    var signs : [String] = []
     
     var saveData : UserDefaults = UserDefaults.standard
     
     
     
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         table.dataSource = self
+        table.delegate = self
         
         let df = DateFormatter()
         df.locale = Locale(identifier: "ja_JP")
@@ -39,37 +41,39 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         table.delegate = self
         
-        saveData.register(defaults: ["dates":[]])
+        dates = (saveData.array(forKey: "dates") ?? []) as! [String]
+        amounts = (saveData.array(forKey: "amounts") ?? []) as! [String]
+        purposes = (saveData.array(forKey: "purposes") ?? []) as! [String]
+        signs = (saveData.array(forKey: "signs") ?? []) as! [String]
+        
+        
+        
         dates = saveData.object(forKey: "date") as! [String]
-            
-        //dates = []
         
-        readFromUserDefaults()
-        sort()
-        print(dates)
         
-            }
+        
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section : Int) -> Int {
-        return self.dates.count
+        return dates.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath : IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell( withIdentifier: "Cell")
         cell?.textLabel?.text = self.dates[indexPath.row]
         //cell?.textLabel?.text = "テスト"
         return cell!
     }
-    func readFromUserDefaults(){
-        guard UserDefaults.standard.array(forKey: "1") is [String] else {
-            return
-        }
-        self.savedArray = dates
-    }
-    func sort(){
-        dates = dates.reversed()
+    func refreshTableView(){
+        dates = (saveData.array(forKey: "dates") ?? []) as! [String]
+        amounts = (saveData.array(forKey: "amounts") ?? []) as! [String]
+        purposes = (saveData.array(forKey: "purposes") ?? []) as! [String]
+        signs = (saveData.array(forKey: "signs") ?? []) as! [String]
+        table.reloadData()
     }
     
-    }
+    
+}
 
 
 

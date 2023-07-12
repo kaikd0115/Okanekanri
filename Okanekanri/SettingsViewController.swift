@@ -12,6 +12,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var dateTextField: UITextField!
     @IBOutlet var amountTextField: UITextField!
     @IBOutlet var purposeTextField: UITextField!
+   
     @IBOutlet var addButton: UIButton!
     @IBOutlet var incomeButton : UIButton!
     @IBOutlet var expenseButton : UIButton!
@@ -19,22 +20,22 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     var saveData: UserDefaults = UserDefaults.standard
 
-    
-    var barArray : [String] = []
-    var memoryArray: [String] = []
-    var memoryArrayReversed : [String] = []
-    
     var dates : [String] = []
     var amounts : [String] = []
     var purposes : [String] = []
-
+    var signs : [String] = []
+    var sign : String = ""
     
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        saveData.register(defaults: ["date":[], "amount":[], "purpose":[]])
+    saveData.register(defaults: ["dates":[], "amounts":[], "purposes":[]])
+        
+        dates = (saveData.array(forKey: "dates") ?? []) as! [String]
+        amounts = (saveData.array(forKey: "amounts") ?? []) as! [String]
+        purposes = (saveData.array(forKey: "purposes") ?? []) as! [String]
+        signs = (saveData.array(forKey: "signs") ?? []) as! [String]
         
                 //print(date)
         
@@ -54,9 +55,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         var dateTextFieldValue: String = ""
         dateTextFieldValue = dateTextField.text!
-    barArray.append("\(dateTextFieldValue)")
+    dates.append("\(dateTextFieldValue)")
         
-        UserDefaults.standard.set(barArray, forKey: "1")
+        UserDefaults.standard.set(dates, forKey: "1")
         
         dateTextField.delegate = self
         
@@ -71,17 +72,28 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveMemo(_ sender: Any){
-        let date = dateTextField.text!
-        let amount = amountTextField.text!
-        let purpose = purposeTextField.text!
+        let date = dateTextField.text
+        let amount = amountTextField.text
+        let purpose = purposeTextField.text
         
 //        saveData.set(dateTextField.text, forKey: "date")
 //        saveData.set(amountTextField.text, forKey: "amount")
 //        saveData.set(purposeTextField.text, forKey: "purpose")
         
-        saveData.set(dates, forKey: "date")
-        saveData.set(amounts, forKey: "amount")
-        saveData.set(purposes, forKey: "purpose")
+        saveData.set(dates, forKey: "dates")
+        saveData.set(amounts, forKey: "amounts")
+        saveData.set(purposes, forKey: "purposes")
+        
+        dates.append(date!)
+        purposes.append(purpose!)
+        amounts.append(amount!)
+        signs.append(sign)
+        
+        let vc = presentingViewController as! ViewController
+        
+        vc.refreshTableView()
+        
+        self.dismiss(animated: true)
 //        print(date)
 //        print(amount)
 //        print(purpose)
@@ -92,11 +104,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         incomeButton.backgroundColor = UIColor(red: 0.37, green: 0.36, blue: 0.9, alpha: 1.0)
         expenseButton.backgroundColor = UIColor.white
         incomeButton.setTitleColor(UIColor.white, for: .normal)
+        sign = "+"
     }
     @IBAction func expense(){
         expenseButton.backgroundColor = UIColor(red: 0.37, green: 0.36, blue: 0.9, alpha: 1.0)
         incomeButton.backgroundColor = UIColor.white
         expenseButton.setTitleColor(UIColor.white, for: .normal)
+        sign = "-"
     }
     @IBAction func dismiss(_ sender: Any){
         dismiss(animated: true, completion: nil)
