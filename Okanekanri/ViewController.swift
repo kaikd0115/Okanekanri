@@ -11,6 +11,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet var table : UITableView!
     @IBOutlet var datelabel: UILabel!
+    @IBOutlet var purposelabel: UILabel!
+    @IBOutlet var amountlabel: UILabel!
     var time = ""
     
     var dates : [String] = []
@@ -60,6 +62,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath : IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell( withIdentifier: "Cell")
+        let datelabel = cell.viewWithTag(1) as! UILabel
+        let purposelabel = cell.viewWithTag(2) as! UILabel
+        let amountlabel = cell.viewWithTag(3) as! UILabel
+        datelabel.text = dates(indexPath.row)
+        purposelabel.text = purposes(indexPath.row)
+        amountlabel.text = signs(indexPath.row)
         cell?.textLabel?.text = self.dates[indexPath.row]
         //cell?.textLabel?.text = "テスト"
         return cell!
